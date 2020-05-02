@@ -2,7 +2,7 @@
 // ianrelecker@gmail.com
 // www.ianrelecker.com
 // Program that allows for the saving of location of watched video of mp4 files in Windows.
-// version 0.2
+// version .5
 //
 // I would like to implement it to automatically launch the .mp4 from the "saved point".
 
@@ -18,9 +18,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.io.*;
@@ -32,25 +30,42 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("MPlaceholder4");
-        HBox saved = new HBox(150);
+        primaryStage.setResizable(false);
+        HBox saved = new HBox(50);
         GridPane pathsBox = new GridPane();
         GridPane locateBox = new GridPane();
 
 //
         TextField userInputPath = new TextField();
         Label labelP = new Label("Path of .mp4");
-        labelP.setPadding(new Insets(0,0,0,56));
+        labelP.setPadding(new Insets(0, 0, 0, 56));
 
 
 //
         TextField userInputLocation = new TextField();
         Label labelL = new Label("Time into .mp4");
-        labelL.setPadding(new Insets(0,0,0,56));
+        labelL.setPadding(new Insets(0, 0, 0, 56));
+//
+        Button clear = new Button("Clear");
+        clear.setOnAction(e-> {
+            try {
+                clearCSV();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+            pathsBox.getChildren().clear();
+            locateBox.getChildren().clear();
+            try {
+                showSave(pathsBox, locateBox);
+            } catch (FileNotFoundException t) {
+                t.printStackTrace();
+            }
+        });
 
 //
         Button enter = new Button("Save");
         enter.setOnAction(e -> {
-            if(!userInputLocation.getText().equals("") &  !userInputPath.getText().equals("")){
+            if (!userInputLocation.getText().equals("") & !userInputPath.getText().equals("")) {
                 try {
                     save(userInputPath.getText(), userInputLocation.getText());
                 } catch (IOException fileNotFoundException) {
@@ -64,9 +79,6 @@ public class Main extends Application {
             } catch (FileNotFoundException t) {
                 t.printStackTrace();
             }
-
-// TODO need to update the layout here
-
         });
 
 
@@ -80,10 +92,11 @@ public class Main extends Application {
         hbox2.setAlignment(Pos.CENTER);
         HBox hbox3 = new HBox(20);
 
-        hbox3.getChildren().addAll(enter);
+        hbox3.getChildren().addAll(enter, clear);
         hbox3.setAlignment(Pos.CENTER);
         Label padd = new Label(" ");
         Label padd2 = new Label("");
+        padd2.setPadding(new Insets(0,0,0,50));
 
 
 // layout for showing the saved items
@@ -95,11 +108,10 @@ public class Main extends Application {
 
 
 // final layout
-// TODO create Borderpane for usage stuff
         saved.getChildren().addAll(pathsBox, locateBox);
         saved.setAlignment(Pos.CENTER);
         vbox12.getChildren().addAll(labelP, hbox1, padd, labelL, hbox2, padd2, hbox3, saved);
-        vbox12.setPadding(new Insets(20,20,20,20));
+        vbox12.setPadding(new Insets(20, 20, 20, 20));
 
         Scene layout1 = new Scene(vbox12, 300, 500);
         primaryStage.setScene(layout1);
@@ -116,13 +128,13 @@ public class Main extends Application {
         Scanner fileIn = new Scanner(saveFile);
         int amtLines = 1;
         int exit = 0;
-        while (exit == 0){
-            try{
-            if(fileIn.nextLine().equals("")){
-                exit++;
-            }
-            amtLines++;
-            }catch (NoSuchElementException p){
+        while (exit == 0) {
+            try {
+                if (fileIn.nextLine().equals("")) {
+                    exit++;
+                }
+                amtLines++;
+            } catch (NoSuchElementException p) {
                 p.getStackTrace();
                 break;
             }
@@ -132,7 +144,7 @@ public class Main extends Application {
         String[] paths = new String[amtLines];
         String[] locations = new String[amtLines];
         int counter = 0;
-        while (counter < amtLines){
+        while (counter < amtLines) {
             try {
                 if (counter % 2 == 0) {
                     paths[counter] = fileIn1.nextLine();
@@ -141,29 +153,29 @@ public class Main extends Application {
                     locations[counter] = fileIn1.nextLine();
                 }
                 counter++;
-            }catch(NoSuchElementException o){
+            } catch (NoSuchElementException o) {
                 o.getStackTrace();
                 break;
             }
         }
 //
-        for(int i=0; i<paths.length; i++){
+        for (int i = 0; i < paths.length; i++) {
             try {
                 Label tempLabel = new Label(paths[i]);
                 if (!paths[i].equals("")) {
                     pathsBox.addRow(i + 1, tempLabel);
                 }
-            }catch (NullPointerException w){
+            } catch (NullPointerException w) {
                 w.getStackTrace();
             }
         }
-        for(int i=0; i<locations.length; i++){
+        for (int i = 0; i < locations.length; i++) {
             try {
                 Label tempLabel2 = new Label(locations[i]);
                 if (!locations[i].equals("")) {
                     locateBox.addRow(i + 1, tempLabel2);
                 }
-            }catch (NullPointerException w){
+            } catch (NullPointerException w) {
                 w.getStackTrace();
             }
         }
@@ -171,6 +183,13 @@ public class Main extends Application {
         locateBox.setAlignment(Pos.BASELINE_RIGHT);
 
 
+    }
+
+    public void clearCSV() throws IOException {
+        File file1 = new File("saves.csv");
+        FileWriter output = new FileWriter(file1, false);
+        output.write("");
+        output.close();
     }
 
     public void save(String path, String location) throws IOException {
