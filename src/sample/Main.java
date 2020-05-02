@@ -2,7 +2,7 @@
 // ianrelecker@gmail.com
 // www.ianrelecker.com
 // Program that allows for the saving of location of watched video of mp4 files in Windows.
-// version .5
+// version 1.0
 //
 // I would like to implement it to automatically launch the .mp4 from the "saved point".
 
