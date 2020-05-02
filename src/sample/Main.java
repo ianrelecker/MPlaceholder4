@@ -8,8 +8,7 @@
 
 
 //ISSUES
-//saves not updating on GUI
-//saves not displaying correctly
+
 
 package sample;
 
