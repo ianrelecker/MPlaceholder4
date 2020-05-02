@@ -37,7 +37,7 @@ public class Main extends Application {
 
 //
         TextField userInputPath = new TextField();
-        Label labelP = new Label("Path of .mp4");
+        Label labelP = new Label("Title of .mp4");
         labelP.setPadding(new Insets(0, 0, 0, 56));
 
 
@@ -60,6 +60,8 @@ public class Main extends Application {
             } catch (FileNotFoundException t) {
                 t.printStackTrace();
             }
+            userInputLocation.setText("");
+            userInputPath.setText("");
         });
 
 //
@@ -79,6 +81,8 @@ public class Main extends Application {
             } catch (FileNotFoundException t) {
                 t.printStackTrace();
             }
+            userInputLocation.setText("");
+            userInputPath.setText("");
         });
 
 
@@ -96,6 +100,7 @@ public class Main extends Application {
         hbox3.setAlignment(Pos.CENTER);
         Label padd = new Label(" ");
         Label padd2 = new Label("");
+        Label pad3 = new Label("  ");
         padd2.setPadding(new Insets(0,0,0,50));
 
 
@@ -110,7 +115,7 @@ public class Main extends Application {
 // final layout
         saved.getChildren().addAll(pathsBox, locateBox);
         saved.setAlignment(Pos.CENTER);
-        vbox12.getChildren().addAll(labelP, hbox1, padd, labelL, hbox2, padd2, hbox3, saved);
+        vbox12.getChildren().addAll(labelP, hbox1, padd, labelL, hbox2, padd2, hbox3, pad3, saved);
         vbox12.setPadding(new Insets(20, 20, 20, 20));
 
         Scene layout1 = new Scene(vbox12, 300, 500);
@@ -158,6 +163,14 @@ public class Main extends Application {
                 break;
             }
         }
+//
+        Label title = new Label("Titles");
+        title.setUnderline(true);
+        pathsBox.addRow(0, title);
+        Label location = new Label("Location");
+        location.setUnderline(true);
+        locateBox.addRow(0, location);
+
 //
         for (int i = 0; i < paths.length; i++) {
             try {
