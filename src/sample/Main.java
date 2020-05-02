@@ -32,7 +32,9 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("MPlaceholder4");
-        HBox saved = new HBox(200);
+        HBox saved = new HBox(150);
+        GridPane pathsBox = new GridPane();
+        GridPane locateBox = new GridPane();
 
 //
         TextField userInputPath = new TextField();
@@ -55,9 +57,16 @@ public class Main extends Application {
                     fileNotFoundException.printStackTrace();
                 }
             }
+            pathsBox.getChildren().clear();
+            locateBox.getChildren().clear();
+            try {
+                showSave(pathsBox, locateBox);
+            } catch (FileNotFoundException t) {
+                t.printStackTrace();
+            }
 
 // TODO need to update the layout here
-            saved.getChildren();
+
         });
 
 
@@ -78,8 +87,6 @@ public class Main extends Application {
 
 
 // layout for showing the saved items
-        GridPane pathsBox = new GridPane();
-        GridPane locateBox = new GridPane();
         try {
             showSave(pathsBox, locateBox);
         } catch (FileNotFoundException e) {
