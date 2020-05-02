@@ -18,6 +18,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -77,8 +78,8 @@ public class Main extends Application {
 
 
 // layout for showing the saved items
-        VBox pathsBox = new VBox(20);
-        VBox locateBox = new VBox(20);
+        GridPane pathsBox = new GridPane();
+        GridPane locateBox = new GridPane();
         try {
             showSave(pathsBox, locateBox);
         } catch (FileNotFoundException e) {
@@ -87,6 +88,7 @@ public class Main extends Application {
 
 
 // final layout
+// TODO create Borderpane for usage stuff
         saved.getChildren().addAll(pathsBox, locateBox);
         saved.setAlignment(Pos.CENTER);
         vbox12.getChildren().addAll(labelP, hbox1, padd, labelL, hbox2, padd2, hbox3, saved);
@@ -102,7 +104,7 @@ public class Main extends Application {
         launch(args);
     }
 
-    public static void showSave(VBox pathsBox, VBox locateBox) throws FileNotFoundException, NoSuchElementException {
+    public static void showSave(GridPane pathsBox, GridPane locateBox) throws FileNotFoundException, NoSuchElementException {
         File saveFile = new File("saves.csv");
         Scanner fileIn = new Scanner(saveFile);
         int amtLines = 1;
@@ -139,12 +141,24 @@ public class Main extends Application {
         }
 //
         for(int i=0; i<paths.length; i++){
-            Label tempLabel = new Label(paths[i]);
-            pathsBox.getChildren().addAll(tempLabel);
+            try {
+                Label tempLabel = new Label(paths[i]);
+                if (!paths[i].equals("")) {
+                    pathsBox.addRow(i + 1, tempLabel);
+                }
+            }catch (NullPointerException w){
+                w.getStackTrace();
+            }
         }
         for(int i=0; i<locations.length; i++){
-            Label tempLabel2 = new Label(locations[i]);
-            locateBox.getChildren().addAll(tempLabel2);
+            try {
+                Label tempLabel2 = new Label(locations[i]);
+                if (!locations[i].equals("")) {
+                    locateBox.addRow(i + 1, tempLabel2);
+                }
+            }catch (NullPointerException w){
+                w.getStackTrace();
+            }
         }
         pathsBox.setAlignment(Pos.BASELINE_LEFT);
         locateBox.setAlignment(Pos.BASELINE_RIGHT);
