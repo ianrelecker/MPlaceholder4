@@ -6,6 +6,11 @@
 //
 // I would like to implement it to automatically launch the .mp4 from the "saved point".
 
+
+//ISSUES
+//saves not updating on GUI
+//saves not displaying correctly
+
 package sample;
 
 import javafx.application.Application;
@@ -54,6 +59,7 @@ public class Main extends Application {
 
 
 // Layout stuff
+// myGUIsucks.txt
         VBox vbox12 = new VBox(0);
         HBox hbox1 = new HBox(20);
         hbox1.getChildren().addAll(userInputPath);
