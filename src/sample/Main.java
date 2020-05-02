@@ -17,9 +17,7 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -33,7 +31,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("MPlaceholder4");
-        HBox saved = new HBox(20);
+        HBox saved = new HBox(200);
 
 //
         TextField userInputPath = new TextField();
@@ -49,17 +47,20 @@ public class Main extends Application {
 //
         Button enter = new Button("Save");
         enter.setOnAction(e -> {
-            try {
-                save(userInputPath.getText(), userInputLocation.getText());
-            } catch (IOException fileNotFoundException) {
-                fileNotFoundException.printStackTrace();
+            if(!userInputLocation.getText().equals("") &  !userInputPath.getText().equals("")){
+                try {
+                    save(userInputPath.getText(), userInputLocation.getText());
+                } catch (IOException fileNotFoundException) {
+                    fileNotFoundException.printStackTrace();
+                }
             }
+
+// TODO need to update the layout here
             saved.getChildren();
         });
 
 
 // Layout stuff
-// myGUIsucks.txt
         VBox vbox12 = new VBox(0);
         HBox hbox1 = new HBox(20);
         hbox1.getChildren().addAll(userInputPath);
@@ -76,14 +77,18 @@ public class Main extends Application {
 
 
 // layout for showing the saved items
+        VBox pathsBox = new VBox(20);
+        VBox locateBox = new VBox(20);
         try {
-            showSave(saved);
+            showSave(pathsBox, locateBox);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
 
 // final layout
+        saved.getChildren().addAll(pathsBox, locateBox);
+        saved.setAlignment(Pos.CENTER);
         vbox12.getChildren().addAll(labelP, hbox1, padd, labelL, hbox2, padd2, hbox3, saved);
         vbox12.setPadding(new Insets(20,20,20,20));
 
@@ -97,21 +102,20 @@ public class Main extends Application {
         launch(args);
     }
 
-    public static void showSave(HBox saved) throws FileNotFoundException, NoSuchElementException {
+    public static void showSave(VBox pathsBox, VBox locateBox) throws FileNotFoundException, NoSuchElementException {
         File saveFile = new File("saves.csv");
         Scanner fileIn = new Scanner(saveFile);
         int amtLines = 1;
         int exit = 0;
         while (exit == 0){
             try{
-            if(fileIn.nextLine() != null){
+            if(fileIn.nextLine().equals("")){
                 exit++;
             }
             amtLines++;
             }catch (NoSuchElementException p){
                 p.getStackTrace();
                 break;
-
             }
         }
 //
@@ -134,19 +138,18 @@ public class Main extends Application {
             }
         }
 //
-        VBox pathsBox = new VBox(0);
-        VBox locateBox = new VBox(0);
         for(int i=0; i<paths.length; i++){
             Label tempLabel = new Label(paths[i]);
-            pathsBox.getChildren().add(i, tempLabel);
+            pathsBox.getChildren().addAll(tempLabel);
         }
         for(int i=0; i<locations.length; i++){
             Label tempLabel2 = new Label(locations[i]);
-            locateBox.getChildren().add(i, tempLabel2);
+            locateBox.getChildren().addAll(tempLabel2);
         }
-        pathsBox.setAlignment(Pos.CENTER);
-        locateBox.setAlignment(Pos.CENTER);
-        saved.getChildren().addAll(pathsBox, locateBox);
+        pathsBox.setAlignment(Pos.BASELINE_LEFT);
+        locateBox.setAlignment(Pos.BASELINE_RIGHT);
+
+
     }
 
     public void save(String path, String location) throws IOException {
