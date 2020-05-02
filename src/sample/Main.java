@@ -30,7 +30,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("MPlaceholder4");
-        primaryStage.setResizable(false);
+        primaryStage.setResizable(true);
         HBox saved = new HBox(50);
         GridPane pathsBox = new GridPane();
         GridPane locateBox = new GridPane();
