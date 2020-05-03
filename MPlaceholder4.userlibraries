@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eclipse-userlibraries>
+  <library name="lib">
+    <archive path="C:/javafxDownload/javafx-sdk-14/lib/src.zip" />
+    <archive path="C:/javafxDownload/javafx-sdk-14/lib/javafx-swt.jar" />
+    <archive path="C:/javafxDownload/javafx-sdk-14/lib/javafx.web.jar" />
+    <archive path="C:/javafxDownload/javafx-sdk-14/lib/javafx.base.jar" />
+    <archive path="C:/javafxDownload/javafx-sdk-14/lib/javafx.fxml.jar" />
+    <archive path="C:/javafxDownload/javafx-sdk-14/lib/javafx.media.jar" />
+    <archive path="C:/javafxDownload/javafx-sdk-14/lib/javafx.swing.jar" />
+    <archive path="C:/javafxDownload/javafx-sdk-14/lib/javafx.controls.jar" />
+    <archive path="C:/javafxDownload/javafx-sdk-14/lib/javafx.graphics.jar" />
+  </library>
+</eclipse-userlibraries>
+
