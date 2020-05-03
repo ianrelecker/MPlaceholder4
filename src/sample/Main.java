@@ -48,7 +48,7 @@ public class Main extends Application {
         labelL.setPadding(new Insets(0, 0, 0, 56));
 //
         Button clear = new Button("Clear");
-        clear.setOnAction(e-> {
+        clear.setOnAction(e -> {
             try {
                 clearCSV();
             } catch (IOException ioException) {
@@ -102,7 +102,7 @@ public class Main extends Application {
         Label padd = new Label(" ");
         Label padd2 = new Label("");
         Label pad3 = new Label("  ");
-        padd2.setPadding(new Insets(0,0,0,50));
+        padd2.setPadding(new Insets(0, 0, 0, 50));
 
 
 // layout for showing the saved items
