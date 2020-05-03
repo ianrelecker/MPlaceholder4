@@ -8,6 +8,8 @@
 
 
 //ISSUES
+// Distribution: currently looking into gradle and other options as exporting as .jar in IntellJ isn't possible
+// GUI scaling with window size
 
 
 package sample;
